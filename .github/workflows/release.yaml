@@ -33,7 +33,8 @@ jobs:
         run: |
           # If triggered by a push with a tag, github.ref_name contains "refs/tags/<tag>"
           # Otherwise (manual dispatch) use the user-provided version.
-          VERSION="${{ github.event.inputs.version || startsWith(github.ref_name, 'refs/tags/') && github.ref_name[8:] || '' }}"
+          # Use printf to safely handle the expression and avoid YAML parsing issues with colons in string slicing
+          VERSION="$(printf '%s' "${{ github.event.inputs.version || startsWith(github.ref_name, 'refs/tags/' ) && github.ref_name:9:-1 || '' }}")"
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Get or Create Release

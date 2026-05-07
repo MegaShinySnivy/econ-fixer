@@ -26,10 +26,12 @@ This program processes your `Sandbox.sbc` save file and:
 
 ## Quick Start Guide
 
-### 1. Backup Your Save
-```
-⚠️ Always create a backup of your save directory before proceeding! You should also ensure you actually have old Economy I stations in your world before using this tool. This readme also assumes you know the basics of Space Engineers and its save file structure. 
-```
+### 1. Backup Your Save and Check Yourself
+
+**⚠️ Always create a backup of your save directory before proceeding! ⚠️**
+
+You should also ensure you actually have old Economy I stations in your world before using this tool. This readme also assumes you know the basics of Space Engineers and its save file structure. 
+
 
 ### 2. Prepare Files
 Place the following files in the **same directory**:
