@@ -35,14 +35,15 @@ You should also ensure you actually have old Economy I stations in your world be
 
 ### 2. Prepare Files
 Place the following files in the **same directory**:
-- `econ-fixer` (the binary executable)
+- `econfixer` (the binary executable)
 - `Sandbox.sbc` (your Space Engineers world configuration file, case-sensitive!)
 
 ### 3. Run The Tool
 Execute from your terminal:
 ```bash
-./econ-fixer        # Linux/macOS
-.\econ-fixer.exe    # Windows
+./econfixer.bin        # Linux
+./econfixer-mac        # macOS
+.\econfixer-win64.exe    # Windows
 ```
 
 You'll see output listing which factions are being removed or kept:
