@@ -6,7 +6,23 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  create_release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_url: ${{ steps.create-release.outputs.release-url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        id: create-release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          tag_name: ${{ github.ref_name }}
+
+  build_and_upload:
+    needs: create_release
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -24,7 +40,7 @@ jobs:
 
       - name: Build econfixer
         run: |
-          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          if "${{ matrix.os }}" == "windows-latest"; then
             go build -o econfixer.exe .
           else
             go build -o econfixer .
@@ -38,12 +54,3 @@ jobs:
           asset_name: econfixer-${{ matrix.os == 'windows-latest' && 'win' || '' }}${{ matrix.os != 'windows-latest' && (matrix.os == 'macos-latest' && 'darwin' || '') }}.tar.gz
           tag: ${{ github.ref }}
           overwrite: true
-
-  create_release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          generate_release_notes: true
