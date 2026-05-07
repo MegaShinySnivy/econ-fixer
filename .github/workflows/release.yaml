@@ -30,12 +30,27 @@ jobs:
       
       # Determine the release version: use git tag if available, otherwise manual input
       - name: Set Release Version
-        run: |
-          # If triggered by a push with a tag, github.ref_name contains "refs/tags/<tag>"
-          # Otherwise (manual dispatch) use the user-provided version.
-          # Use printf to safely handle the expression and avoid YAML parsing issues with colons in string slicing
-          VERSION="$(printf '%s' "${{ github.event.inputs.version || startsWith(github.ref_name, 'refs/tags/' ) && github.ref_name:9:-1 || '' }}")"
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+        uses: actions/github-script@v6
+        id: set-version
+        with:
+          script: |
+            let version = '';
+            
+            // Check if this is a release event (tag pushed)
+            if (context.eventName === 'release' || context.ref.startsWith('refs/tags/')) {
+              // Extract tag name from ref - remove "refs/tags/" prefix
+              version = context.ref.replace(/^refs\/tags\//, '');
+            } else {
+              // Use manually provided version input
+              version = process.env.VERSION_INPUT || '';
+            }
+            
+            if (version) {
+              core.exportVariable('RELEASE_VERSION', version);
+              console.log(`Setting RELEASE_VERSION to: ${version}`);
+            } else {
+              throw new Error('No release version specified - neither a tag nor manual input provided');
+            }
 
       - name: Get or Create Release
         uses: actions/github-script@v6
