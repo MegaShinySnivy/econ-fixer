@@ -49,7 +49,7 @@ Execute from your terminal:
 You'll see output listing which factions are being removed or kept:
 ```
 Removing faction: Tag='ABCD' (length=4, meaning it must be an NPC)
-Keeping faction: Tag='EFG' (length=3, meaning it must be a player faction)
+Keeping faction: Tag='EFG' (length is not 4, meaning it must be a player faction)
 ...
 Processing complete. Output written to Sandbox_noNPCs.sbc (XXXX bytes)
 ```
@@ -133,9 +133,9 @@ Why use Regex and not the XML parser? Because I am a systems administrator, not 
 
 | Platform | Command |
 |----------|---------|
-| Linux (x86_64) | `./econ-fixer` |
-| macOS (Intel/Apple Silicon) | `./econ-fixer` |
-| Windows 10+ | `.\econ-fixer.exe` |
+| Linux (x86_64) | `./econfixer` |
+| macOS (Intel/Apple Silicon) | `./econfixer` |
+| Windows 10+ | `.\econfixer.exe` |
 
 ---
 

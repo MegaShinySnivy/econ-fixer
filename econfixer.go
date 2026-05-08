@@ -36,7 +36,7 @@ func main() {
 			removalStartIndices = append(removalStartIndices, m[0])
 			fmt.Printf("Removing faction: Tag='%s' (length=%d, meaning it must be an NPC)\n", tagValue, len(tagValue))
 		} else if len(tagValue) > 0 {
-			fmt.Printf("Keeping faction: Tag='%s' (length=%d, meaning it must be a player faction)\n", tagValue)
+			fmt.Printf("Keeping faction: Tag='%s' (length is not 4, meaning it must be a player faction)\n", tagValue)
 		} else {
 			fmt.Println("Keeping faction: no Tag field. This should never happen.")
 		}
